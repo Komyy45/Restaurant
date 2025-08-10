@@ -14,4 +14,9 @@
     <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Seed\" />
+  </ItemGroup>
+
 </Project>
