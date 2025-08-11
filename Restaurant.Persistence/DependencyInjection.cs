@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurant.Application.Contracts;
+using Restaurant.Domain.Contracts;
 using Restaurant.Persistence.Data;
+using Restaurant.Persistence.Repositories;
 
 namespace Restaurant.Persistence;
 public static class DependencyInjection
@@ -12,6 +14,8 @@ public static class DependencyInjection
 		services.AddDbContext<RestaurantDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 		services.AddScoped<IDbContextInitializer, DbContextInitializer>();
+
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 		return services;
 	}

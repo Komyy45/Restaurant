@@ -27,12 +27,16 @@ namespace Restaurant.API
 
 			var scope = app.Services.CreateScope();
 
-			var dbContextInitializer = scope.ServiceProvider.GetRequiredService<IDbContextInitializer>();
-
 			try
 			{
-				await dbContextInitializer.InitializeAsync();
-				await dbContextInitializer.SeedAsync();
+				var dbContextInitializer = scope.ServiceProvider.GetService<IDbContextInitializer>();
+
+				if (dbContextInitializer is not null)
+				{
+					await dbContextInitializer.InitializeAsync();
+					await dbContextInitializer.SeedAsync();
+				}
+
 			}
 			catch (Exception ex)
 			{

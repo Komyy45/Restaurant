@@ -4,7 +4,7 @@ using Restaurant.Domain.Entities;
 using RestaurantEntity = Restaurant.Domain.Entities.Restaurant;
 
 namespace Restaurant.Persistence.Data;
-internal class DbContextInitializer(RestaurantDbContext dbContext) : IDbContextInitializer
+public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbContextInitializer
 {
 
 	private IEnumerable<RestaurantEntity> restaurants = new List<RestaurantEntity>
@@ -26,8 +26,8 @@ internal class DbContextInitializer(RestaurantDbContext dbContext) : IDbContextI
 			},
 			Dishes = new List<Dish>
 			{
-				new Dish { Id = 1, Name = "Margherita Pizza", Description = "Tomato, mozzarella, fresh basil", Price = 12.99m, KiloCalories = 850, RestaurantId = 1 },
-				new Dish { Id = 2, Name = "Fettuccine Alfredo", Description = "Creamy parmesan sauce with fresh pasta", Price = 14.50m, KiloCalories = 950, RestaurantId = 1 }
+				new() { Id = 1, Name = "Margherita Pizza", Description = "Tomato, mozzarella, fresh basil", Price = 12.99m, KiloCalories = 850, RestaurantId = 1 },
+				new() { Id = 2, Name = "Fettuccine Alfredo", Description = "Creamy parmesan sauce with fresh pasta", Price = 14.50m, KiloCalories = 950, RestaurantId = 1 }
 			}
 		},
 		new RestaurantEntity
@@ -47,8 +47,8 @@ internal class DbContextInitializer(RestaurantDbContext dbContext) : IDbContextI
 			},
 			Dishes = new List<Dish>
 			{
-				new Dish { Id = 3, Name = "Salmon Nigiri", Description = "Fresh salmon over sushi rice", Price = 4.50m, KiloCalories = 200, RestaurantId = 2 },
-				new Dish { Id = 4, Name = "California Roll", Description = "Crab, avocado, cucumber", Price = 6.99m, KiloCalories = 300, RestaurantId = 2 }
+				new() { Id = 3, Name = "Salmon Nigiri", Description = "Fresh salmon over sushi rice", Price = 4.50m, KiloCalories = 200, RestaurantId = 2 },
+				new() { Id = 4, Name = "California Roll", Description = "Crab, avocado, cucumber", Price = 6.99m, KiloCalories = 300, RestaurantId = 2 }
 			}
 		},
 		new RestaurantEntity
@@ -68,8 +68,8 @@ internal class DbContextInitializer(RestaurantDbContext dbContext) : IDbContextI
 			},
 			Dishes = new List<Dish>
 			{
-				new Dish { Id = 5, Name = "Chicken Tikka Masala", Description = "Creamy tomato sauce with tender chicken", Price = 13.99m, KiloCalories = 750, RestaurantId = 3 },
-				new Dish { Id = 6, Name = "Garlic Naan", Description = "Soft Indian bread with garlic butter", Price = 3.50m, KiloCalories = 250, RestaurantId = 3 }
+				new() { Id = 5, Name = "Chicken Tikka Masala", Description = "Creamy tomato sauce with tender chicken", Price = 13.99m, KiloCalories = 750, RestaurantId = 3 },
+				new() { Id = 6, Name = "Garlic Naan", Description = "Soft Indian bread with garlic butter", Price = 3.50m, KiloCalories = 250, RestaurantId = 3 }
 			}
 		}
 	};
