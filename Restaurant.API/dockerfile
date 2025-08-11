@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copy project files (just csproj to leverage caching)
+COPY Restaurant.API/Restaurant.API.csproj Restaurant.API/
+COPY Restaurant.Application/Restaurant.Application.csproj Restaurant.Application/
+COPY Restaurant.Domain/Restaurant.Domain.csproj Restaurant.Domain/
+COPY Restaurant.Infrastructure/Restaurant.Infrastructure.csproj Restaurant.Infrastructure/
+COPY Restaurant.Persistence/Restaurant.Persistence.csproj Restaurant.Persistence/
+
+# Restore
+RUN dotnet restore ./Restaurant.API/Restaurant.API.csproj
+
+# Copy everything else
+COPY . .
+
+# Build
+RUN dotnet build ./Restaurant.API/Restaurant.API.csproj -c Release -o /app/build
+
+# Publish
+RUN dotnet publish ./Restaurant.API/Restaurant.API.csproj -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "Restaurant.API.dll"]
