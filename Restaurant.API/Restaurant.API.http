@@ -1,6 +1,27 @@
-@Restaurant.API_HostAddress = http://localhost:5104
+@Restaurant.API_HostAddress = http://localhost:5104/api
 
-GET {{Restaurant.API_HostAddress}}/weatherforecast/
+POST {{Restaurant.API_HostAddress}}/Restaurants
+Content-Type: application/json
+
+{
+  "name": "Hambola",
+  "category": "Indian",
+  "description": "Hambola el2ola restaurant",
+  "contactEmail": "Restaurant@Hambola.com",
+  "city": "Cairo",
+  "street":  "Hanbolooo",
+  "postalCode": "19-990"
+}
+
+###
+
+GET {{Restaurant.API_HostAddress}}/Restaurants
 Accept: application/json
 
 ###
+
+GET {{Restaurant.API_HostAddress}}/Restaurants/2
+Accept: application/json
+
+###
+

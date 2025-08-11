@@ -11,7 +11,6 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 	{
 		new RestaurantEntity
 		{
-			Id = 1,
 			Name = "Bella Italia",
 			Description = "Authentic Italian cuisine with fresh pasta and wood-fired pizza.",
 			Category = "Italian",
@@ -32,7 +31,6 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 		},
 		new RestaurantEntity
 		{
-			Id = 2,
 			Name = "Sushi World",
 			Description = "Fresh sushi and sashimi prepared by master chefs.",
 			Category = "Japanese",
@@ -53,7 +51,6 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 		},
 		new RestaurantEntity
 		{
-			Id = 3,
 			Name = "Spice Garden",
 			Description = "Traditional Indian food with aromatic spices.",
 			Category = "Indian",
