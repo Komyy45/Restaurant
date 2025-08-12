@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurant.Application.Mapping;
 using Restaurant.Domain.Contracts;
 using Restaurant.Domain.Entities;
 
@@ -12,22 +13,7 @@ internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork,
     
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        var restaurant = new Domain.Entities.Restaurant
-        {
-            Id = 0,
-            Name = request.Name,
-            Description = request.Description,
-            Category = request.Category,
-            HasDelivery = request.HasDelivery,
-            ContactEmail = request.ContactEmail,
-            Contactumber = request.ContactNumber,
-            Address = new Address
-            {
-                City = request.City,
-                Street = request.Street,
-                PostalCode = request.Postalcode
-            },
-        };
+        var restaurant = request.ToEntity();
 
         logger.LogInformation("Creating new Restaurant.");
         

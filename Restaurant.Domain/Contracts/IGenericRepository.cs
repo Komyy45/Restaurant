@@ -12,7 +12,7 @@ public interface IGenericRepository<TEntity, TKey>
 	Task<TEntity?> GetAsync(TKey key);
 	Task<TSelector?> GetAsync<TSelector>(TKey key, Expression<Func<TEntity, TSelector>> selector);
 	ValueTask CreateAsync(TEntity entity);
-	void UpdateAsync(TEntity entity);
-	void DeleteAsync(TEntity entity);
+	void Update(TEntity entity);
+	void Delete(TEntity entity);
 }
 

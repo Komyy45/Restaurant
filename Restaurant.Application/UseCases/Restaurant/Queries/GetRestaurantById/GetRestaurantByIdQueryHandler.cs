@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Restaurant.Application.Mapping;
 using Restaurant.Application.Models.Restaurants;
 using Restaurant.Domain.Contracts;
 
@@ -15,18 +16,7 @@ internal sealed class GetRestaurantByIdQueryHandler(IUnitOfWork unitOfWork) : IR
 
         if (restaurant is null) return null!;
 
-        var response =  new RestaurantDto(
-            restaurant.Id,
-            restaurant.Name,
-            restaurant.Description,
-            restaurant.Category,
-            restaurant.HasDelivery,
-            restaurant.ContactEmail,
-            restaurant.Contactumber,
-            restaurant.Address?.City,
-            restaurant.Address?.Street,
-            restaurant.Address?.PostalCode
-        );
+        var response = restaurant.ToDto();
         
         return response;
     }

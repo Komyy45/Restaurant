@@ -37,12 +37,12 @@ internal sealed class GenericRepository<TEntity, TKey>(RestaurantDbContext conte
 		await dbSet.AddAsync(entity);
 	}
 
-	public void UpdateAsync(TEntity entity)
+	public void Update(TEntity entity)
 	{
 		dbSet.Update(entity);
 	}
 
-	public void DeleteAsync(TEntity entity)
+	public void Delete(TEntity entity)
 	{
 		dbSet.Remove(entity);
 	}

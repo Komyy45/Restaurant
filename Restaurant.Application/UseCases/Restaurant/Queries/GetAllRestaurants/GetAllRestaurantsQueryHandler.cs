@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Restaurant.Application.Mapping;
 using Restaurant.Application.Models.Restaurants;
 using Restaurant.Domain.Contracts;
 
@@ -13,18 +14,7 @@ internal sealed class GetAllRestaurantsQueryHandler(IUnitOfWork unitOfWork) : IR
     {
         var restaurants = await _restaurantRepository.GetAllAsync();
 
-        var response =  restaurants.Select(r => new RestaurantDto(
-            r.Id,
-            r.Name,
-            r.Description,
-            r.Category,
-            r.HasDelivery,
-            r.ContactEmail,
-            r.Contactumber,
-            r.Address?.City,
-            r.Address?.Street,
-            r.Address?.PostalCode
-            ));
+        var response =  restaurants.Select(r => r.ToDto());
         
         return response;
     }

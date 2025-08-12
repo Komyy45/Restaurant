@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Restaurant.Application.UseCases.Restaurant.Commands.CreateRestaurant;
 
-public sealed class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
+internal sealed class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
     private readonly string[] _validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian"];
     
@@ -16,7 +16,7 @@ public sealed class CreateRestaurantCommandValidator : AbstractValidator<CreateR
             .EmailAddress()
             .WithMessage("Please, Provide valid email address.");
 
-        RuleFor(r => r.Postalcode)
+        RuleFor(r => r.PostalCode)
             .Matches(@"^\d{2}-\d{3}$")
             .WithMessage("Please, Provide valid Postal code.");
 

@@ -1,3 +1,4 @@
+
 @Restaurant.API_HostAddress = http://localhost:5104/api
 
 POST {{Restaurant.API_HostAddress}}/Restaurants
@@ -20,8 +21,23 @@ Accept: application/json
 
 ###
 
-GET {{Restaurant.API_HostAddress}}/Restaurants/2
+GET {{Restaurant.API_HostAddress}}/Restaurants/4
 Accept: application/json
 
 ###
 
+PATCH {{Restaurant.API_HostAddress}}/Restaurants/4
+Content-Type: application/json
+
+{
+  "name": "Abo Younis",
+  "description": "Agmad mt3m fkosom el3alam",
+  "hasDelivery": true
+}
+
+###
+
+DELETE {{Restaurant.API_HostAddress}}/Restaurants/4
+Accept: application/json
+
+###

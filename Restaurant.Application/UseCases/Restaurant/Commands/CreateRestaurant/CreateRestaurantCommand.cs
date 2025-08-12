@@ -11,5 +11,5 @@ public sealed record CreateRestaurantCommand(
     string? ContactNumber,
     string? City,
     string? Street,
-    string? Postalcode
+    string? PostalCode
     ) : IRequest<int>;

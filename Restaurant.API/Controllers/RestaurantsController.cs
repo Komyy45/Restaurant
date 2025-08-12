@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.API.Controllers.Common;
 using Restaurant.Application.Models.Restaurants;
 using Restaurant.Application.UseCases.Restaurant.Commands.CreateRestaurant;
+using Restaurant.Application.UseCases.Restaurant.Commands.DeleteRestaurant;
+using Restaurant.Application.UseCases.Restaurant.Commands.UpdateRestaurant;
 using Restaurant.Application.UseCases.Restaurant.Queries.GetAllRestaurants;
 using Restaurant.Application.UseCases.Restaurant.Queries.GetRestaurantById;
 
@@ -21,17 +23,31 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
     }
     
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<RestaurantDto>> Get([FromRoute] int id)
+    public async Task<ActionResult<RestaurantDto>> Get([FromRoute] GetRestaurantByIdQuery request)
     {
-        var request = new GetRestaurantByIdQuery(id);
         var response = await mediator.Send(request);
         return response is null ? NotFound() : Ok(response);
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create(CreateRestaurantCommand createRestaurantCommand)
+    public async Task<ActionResult<int>> Create(CreateRestaurantCommand createRestaurantCommand)
     {
         var id = await mediator.Send(createRestaurantCommand);
         return Ok(id);
+    }
+
+    [HttpPatch("{id:int}")]
+    public async Task<ActionResult<bool>> Update([FromRoute] int id, [FromBody] UpdateRestaurantCommand request)
+    {
+        request = request with { Id = id };
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+    
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] DeleteRestaurantCommand request)
+    {
+        await mediator.Send(request);
+        return Ok();
     }
 }
