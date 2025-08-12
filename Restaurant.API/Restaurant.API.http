@@ -37,7 +37,52 @@ Content-Type: application/json
 
 ###
 
-DELETE {{Restaurant.API_HostAddress}}/Restaurants/4
+DELETE {{Restaurant.API_HostAddress}}/Restaurants
 Accept: application/json
+
+###
+
+@DishesSharedUrl = {{Restaurant.API_HostAddress}}/Restaurants/
+
+GET {{DishesSharedUrl}}/1/Dishes/7
+Accept: application/json
+
+###
+
+GET {{DishesSharedUrl}}/1/Dishes/1
+Accept: application/json
+
+###
+
+
+
+POST {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes
+Content-Type: application/json
+
+{
+  "name": "Meat Lovers Pizza",
+  "description": "Tomato, mozzarella, fresh basil, meat, sausage and olive",
+  "price": 19.99,
+  "kiloCalories": 1150,
+  "restaurantId": 1
+}
+
+###
+
+PUT {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes/7
+Content-Type: application/json
+
+{
+  "name": "Chicken Lovers Pizza",
+  "description": "Tomato, mozzarella, fresh basil, fried chicken and olive",
+  "price": 12.99,
+  "kiloCalories": 950,
+  "restaurantId": 1
+}
+
+###
+
+DELETE {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes/7
+Content-Type: application/json
 
 ###

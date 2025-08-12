@@ -22,6 +22,21 @@ internal sealed class GenericRepository<TEntity, TKey>(RestaurantDbContext conte
 		if(asNoTracking) return await dbSet.AsNoTracking().Select(selector).ToListAsync();
 		return await dbSet.Select(selector).ToListAsync();
 	}
+
+	public async Task<IEnumerable<TEntity>>  GetAllAsync(ISpecification<TEntity, TKey> spec, bool asNoTracking = true)
+	{
+		var query = dbSet.Evaluate(spec);
+		return await (asNoTracking ? query.AsNoTracking().ToListAsync() : query.ToListAsync());
+	}
+
+	public async Task<IEnumerable<TSelector>> GetAllAsync<TSelector>(Expression<Func<TEntity, TSelector>> selector, 
+		ISpecification<TEntity, TKey> spec,
+		 bool asNoTracking = true)
+	{
+		var query = dbSet.Evaluate(spec);
+		return await (asNoTracking ? query.AsNoTracking().Select(selector).ToListAsync() : query.Select(selector).ToListAsync());
+	}
+	
 	public async Task<TEntity?> GetAsync(TKey key)
 	{
 		return await dbSet.FirstOrDefaultAsync(e => e.Id.Equals(key));
@@ -30,6 +45,18 @@ internal sealed class GenericRepository<TEntity, TKey>(RestaurantDbContext conte
 	public async Task<TSelector?> GetAsync<TSelector>(TKey key, Expression<Func<TEntity, TSelector>> selector)
 	{
 		return await dbSet.Where(e => e.Id.Equals(key)).Select(selector).FirstOrDefaultAsync();
+	}
+
+
+	public async Task<TEntity?> GetAsync(TKey key, ISpecification<TEntity, TKey> spec)
+	{
+		return await dbSet.Evaluate(spec).FirstOrDefaultAsync(e => e.Id.Equals(key));
+	}
+
+	public async Task<TSelector?> GetAsync<TSelector>(TKey key, Expression<Func<TEntity, TSelector>> selector,
+		ISpecification<TEntity, TKey> spec)
+	{
+		return await dbSet.Evaluate(spec).Where(e => e.Id.Equals(key)).Select(selector).FirstOrDefaultAsync();
 	}
 
 	public async ValueTask CreateAsync(TEntity entity)

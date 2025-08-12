@@ -25,8 +25,8 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 			},
 			Dishes = new List<Dish>
 			{
-				new() { Id = 1, Name = "Margherita Pizza", Description = "Tomato, mozzarella, fresh basil", Price = 12.99m, KiloCalories = 850, RestaurantId = 1 },
-				new() { Id = 2, Name = "Fettuccine Alfredo", Description = "Creamy parmesan sauce with fresh pasta", Price = 14.50m, KiloCalories = 950, RestaurantId = 1 }
+				new() { Name = "Margherita Pizza", Description = "Tomato, mozzarella, fresh basil", Price = 12.99m, KiloCalories = 850, RestaurantId = 1 },
+				new() { Name = "Fettuccine Alfredo", Description = "Creamy parmesan sauce with fresh pasta", Price = 14.50m, KiloCalories = 950, RestaurantId = 1 }
 			}
 		},
 		new RestaurantEntity
@@ -45,8 +45,8 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 			},
 			Dishes = new List<Dish>
 			{
-				new() { Id = 3, Name = "Salmon Nigiri", Description = "Fresh salmon over sushi rice", Price = 4.50m, KiloCalories = 200, RestaurantId = 2 },
-				new() { Id = 4, Name = "California Roll", Description = "Crab, avocado, cucumber", Price = 6.99m, KiloCalories = 300, RestaurantId = 2 }
+				new() { Name = "Salmon Nigiri", Description = "Fresh salmon over sushi rice", Price = 4.50m, KiloCalories = 200, RestaurantId = 2 },
+				new() { Name = "California Roll", Description = "Crab, avocado, cucumber", Price = 6.99m, KiloCalories = 300, RestaurantId = 2 }
 			}
 		},
 		new RestaurantEntity
@@ -65,8 +65,8 @@ public sealed class DbContextInitializer(RestaurantDbContext dbContext) : IDbCon
 			},
 			Dishes = new List<Dish>
 			{
-				new() { Id = 5, Name = "Chicken Tikka Masala", Description = "Creamy tomato sauce with tender chicken", Price = 13.99m, KiloCalories = 750, RestaurantId = 3 },
-				new() { Id = 6, Name = "Garlic Naan", Description = "Soft Indian bread with garlic butter", Price = 3.50m, KiloCalories = 250, RestaurantId = 3 }
+				new() { Name = "Chicken Tikka Masala", Description = "Creamy tomato sauce with tender chicken", Price = 13.99m, KiloCalories = 750, RestaurantId = 3 },
+				new() { Name = "Garlic Naan", Description = "Soft Indian bread with garlic butter", Price = 3.50m, KiloCalories = 250, RestaurantId = 3 }
 			}
 		}
 	};

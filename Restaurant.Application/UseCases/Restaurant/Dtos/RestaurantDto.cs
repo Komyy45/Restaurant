@@ -1,4 +1,4 @@
-﻿namespace Restaurant.Application.Models.Restaurants;
+﻿namespace Restaurant.Application.UseCases.Restaurant.Dtos;
 
 public record RestaurantDto(
     int Id,

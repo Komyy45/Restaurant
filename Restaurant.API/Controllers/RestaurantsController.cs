@@ -2,10 +2,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.API.Controllers.Common;
-using Restaurant.Application.Models.Restaurants;
 using Restaurant.Application.UseCases.Restaurant.Commands.CreateRestaurant;
 using Restaurant.Application.UseCases.Restaurant.Commands.DeleteRestaurant;
 using Restaurant.Application.UseCases.Restaurant.Commands.UpdateRestaurant;
+using Restaurant.Application.UseCases.Restaurant.Dtos;
 using Restaurant.Application.UseCases.Restaurant.Queries.GetAllRestaurants;
 using Restaurant.Application.UseCases.Restaurant.Queries.GetRestaurantById;
 

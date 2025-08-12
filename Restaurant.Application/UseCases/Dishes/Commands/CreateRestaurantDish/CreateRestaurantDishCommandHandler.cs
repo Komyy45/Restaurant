@@ -1,0 +1,24 @@
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using Restaurant.Application.Mapping;
+using Restaurant.Domain.Contracts;
+using Restaurant.Domain.Entities;
+
+namespace Restaurant.Application.UseCases.Dishes.Commands.CreateRestaurantDish;
+
+internal sealed class CreateRestaurantDishCommandHandler(IUnitOfWork unitOfWork,
+    ILogger<CreateRestaurantDishCommandHandler> logger) : IRequestHandler<CreateRestaurantDishCommand>
+{
+    private readonly IGenericRepository<Dish, int> _dishRepository = unitOfWork.GetRepository<Dish, int>();
+    
+    public async Task Handle(CreateRestaurantDishCommand request, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Creating new Dish.");
+
+        var dish = request.ToEntity();
+        
+        await _dishRepository.CreateAsync(dish);
+
+        await unitOfWork.CompleteAsync();
+    }
+}

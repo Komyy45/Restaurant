@@ -1,14 +1,14 @@
 ﻿using Mapster;
-using Restaurant.Application.Models.Restaurants;
 using Restaurant.Application.UseCases.Restaurant.Commands.CreateRestaurant;
 using Restaurant.Application.UseCases.Restaurant.Commands.UpdateRestaurant;
+using Restaurant.Application.UseCases.Restaurant.Dtos;
 
 namespace Restaurant.Application.Mapping;
 
 using RestaurantEntity = Domain.Entities.Restaurant;
 
 
-internal static class MappingProfile
+internal static class RestaurantsMappingProfile
 {
     internal static RestaurantDto ToDto(this RestaurantEntity restaurant)
     {

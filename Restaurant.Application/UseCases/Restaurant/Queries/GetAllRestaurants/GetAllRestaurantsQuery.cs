@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Restaurant.Application.Models.Restaurants;
+using Restaurant.Application.UseCases.Restaurant.Dtos;
 
 namespace Restaurant.Application.UseCases.Restaurant.Queries.GetAllRestaurants;
 

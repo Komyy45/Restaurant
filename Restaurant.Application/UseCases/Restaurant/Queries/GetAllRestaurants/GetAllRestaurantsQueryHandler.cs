@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Restaurant.Application.Mapping;
-using Restaurant.Application.Models.Restaurants;
+using Restaurant.Application.UseCases.Restaurant.Dtos;
 using Restaurant.Domain.Contracts;
 
 namespace Restaurant.Application.UseCases.Restaurant.Queries.GetAllRestaurants;
