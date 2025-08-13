@@ -1,10 +1,9 @@
-
+using Microsoft.OpenApi.Models;
 using Restaurant.API.Middlewares;
 using Restaurant.Application;
 using Restaurant.Application.Contracts;
 using Restaurant.Infrastructure;
 using Restaurant.Persistence;
-using Scalar.AspNetCore;
 using Serilog;
 
 namespace Restaurant.API
@@ -27,9 +26,11 @@ namespace Restaurant.API
 			builder.AddInfrastructureServices();
 
 			builder.Services.AddSingleton<GlobalExceptionHandlingMiddleware>();
-
-			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-			builder.Services.AddOpenApi(); 
+			
+			builder.Services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant.API", Version = "v1" });
+			});
 
 			#endregion
 
@@ -59,15 +60,12 @@ namespace Restaurant.API
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.MapOpenApi(pattern: "api/document.json");
-				app.MapScalarApiReference(options =>
+				app.UseSwagger();
+				app.UseSwaggerUI();
+				app.UseReDoc(c =>
 				{
-					options.OpenApiRoutePattern = "api/document.json";
-					options.Title = "Restaurant.API Documentation";
-					options.Theme = ScalarTheme.DeepSpace;
-					options.Layout = ScalarLayout.Modern;
-					options.DarkMode = true;
-					options.CustomCss = "* { font-family: cursive; }";
+					c.DocumentTitle = "REDOC API Documentation";
+					c.SpecUrl = "api/document.json";
 				});
 			}
 

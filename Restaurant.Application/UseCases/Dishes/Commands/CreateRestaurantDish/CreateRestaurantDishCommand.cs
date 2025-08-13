@@ -8,4 +8,4 @@ public sealed record CreateRestaurantDishCommand(
     string Description,
     decimal Price,
     int? KiloCalories
-    ) : IRequest; 
+    ) : IRequest<int>; 

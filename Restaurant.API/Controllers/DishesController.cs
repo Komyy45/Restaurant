@@ -10,7 +10,7 @@ using Restaurant.Application.UseCases.Dishes.Queries.GetRestaurantDishes;
 
 namespace Restaurant.API.Controllers;
 
-[Route("api/Restaurants/{restaurantId:int}/[controller]")]
+[Route("/api/Restaurants/{restaurantId:int}/[controller]")]
 public class DishesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
@@ -28,8 +28,9 @@ public class DishesController(IMediator mediator) : BaseApiController
     [HttpPost]
     public async Task<IActionResult> CreateDish([FromRoute] int restaurantId, [FromBody] CreateRestaurantDishCommand request)
     {
-        await mediator.Send(request);
-        return Created();
+        request = request with { RestaurantId = restaurantId };
+        var id = await mediator.Send(request);
+        return CreatedAtAction(nameof(GetDishById), new { restaurantId, id }, null);
     }
 
     [HttpPut("{id:int}")]
