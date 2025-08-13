@@ -1,4 +1,5 @@
 
+using Restaurant.API.Middlewares;
 using Restaurant.Application;
 using Restaurant.Application.Contracts;
 using Restaurant.Persistence;
@@ -53,6 +54,8 @@ namespace Restaurant.API
 			{
 				app.MapOpenApi();
 			}
+
+			app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 			app.UseHttpsRedirection();
 
