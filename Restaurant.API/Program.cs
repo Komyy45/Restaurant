@@ -2,7 +2,9 @@
 using Restaurant.API.Middlewares;
 using Restaurant.Application;
 using Restaurant.Application.Contracts;
+using Restaurant.Infrastructure;
 using Restaurant.Persistence;
+using Serilog;
 
 namespace Restaurant.API
 {
@@ -20,6 +22,10 @@ namespace Restaurant.API
 
 			builder.Services.AddPersistenceServices(builder.Configuration)
 							.AddApplicationServices();
+			
+			builder.AddInfrastructureServices();
+
+			builder.Services.AddSingleton<GlobalExceptionHandlingMiddleware>();
 
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 			builder.Services.AddOpenApi(); 
@@ -55,6 +61,8 @@ namespace Restaurant.API
 				app.MapOpenApi();
 			}
 
+			app.UseSerilogRequestLogging();
+			
 			app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 			app.UseHttpsRedirection();

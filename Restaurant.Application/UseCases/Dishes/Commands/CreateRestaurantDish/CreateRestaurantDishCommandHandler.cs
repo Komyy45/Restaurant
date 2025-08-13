@@ -13,7 +13,7 @@ internal sealed class CreateRestaurantDishCommandHandler(IUnitOfWork unitOfWork,
     
     public async Task Handle(CreateRestaurantDishCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating new Dish.");
+        logger.LogInformation("Creating new Dish {@dish}.", request);
 
         var dish = request.ToEntity();
         

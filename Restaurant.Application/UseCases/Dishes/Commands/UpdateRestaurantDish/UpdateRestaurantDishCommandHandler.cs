@@ -14,7 +14,7 @@ internal sealed class UpdateRestaurantDishCommandHandler(IUnitOfWork unitOfWork,
     
     public async Task Handle(UpdateRestaurantDishCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Updating a Dish.");
+        logger.LogInformation("Updating a Dish {@dish}.", request);
         
         var dish = await  _dishRepository.GetAsync(request.Id);
 
