@@ -4,6 +4,7 @@ using Restaurant.Application;
 using Restaurant.Application.Contracts;
 using Restaurant.Infrastructure;
 using Restaurant.Persistence;
+using Scalar.AspNetCore;
 using Serilog;
 
 namespace Restaurant.API
@@ -58,7 +59,16 @@ namespace Restaurant.API
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.MapOpenApi();
+				app.MapOpenApi(pattern: "api/document.json");
+				app.MapScalarApiReference(options =>
+				{
+					options.OpenApiRoutePattern = "api/document.json";
+					options.Title = "Restaurant.API Documentation";
+					options.Theme = ScalarTheme.DeepSpace;
+					options.Layout = ScalarLayout.Modern;
+					options.DarkMode = true;
+					options.CustomCss = "* { font-family: cursive; }";
+				});
 			}
 
 			app.UseSerilogRequestLogging();
