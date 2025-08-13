@@ -1,4 +1,5 @@
 
+using Restaurant.Application;
 using Restaurant.Application.Contracts;
 using Restaurant.Persistence;
 
@@ -16,7 +17,8 @@ namespace Restaurant.API
 
 			builder.Services.AddControllers();
 
-			builder.Services.AddPersistenceServices(builder.Configuration);
+			builder.Services.AddPersistenceServices(builder.Configuration)
+							.AddApplicationServices();
 
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 			builder.Services.AddOpenApi(); 
@@ -27,12 +29,16 @@ namespace Restaurant.API
 
 			var scope = app.Services.CreateScope();
 
-			var dbContextInitializer = scope.ServiceProvider.GetRequiredService<IDbContextInitializer>();
-
 			try
 			{
-				await dbContextInitializer.InitializeAsync();
-				await dbContextInitializer.SeedAsync();
+				var dbContextInitializer = scope.ServiceProvider.GetService<IDbContextInitializer>();
+
+				if (dbContextInitializer is not null)
+				{
+					await dbContextInitializer.InitializeAsync();
+					await dbContextInitializer.SeedAsync();
+				}
+
 			}
 			catch (Exception ex)
 			{

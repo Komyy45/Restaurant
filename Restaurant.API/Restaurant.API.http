@@ -1,6 +1,88 @@
-@Restaurant.API_HostAddress = http://localhost:5104
 
-GET {{Restaurant.API_HostAddress}}/weatherforecast/
+@Restaurant.API_HostAddress = http://localhost:5104/api
+
+POST {{Restaurant.API_HostAddress}}/Restaurants
+Content-Type: application/json
+
+{
+  "name": "Hambola",
+  "category": "Indian",
+  "description": "Hambola el2ola restaurant",
+  "contactEmail": "Restaurant@Hambola.com",
+  "city": "Cairo",
+  "street":  "Hanbolooo",
+  "postalCode": "19-990"
+}
+
+###
+
+GET {{Restaurant.API_HostAddress}}/Restaurants
 Accept: application/json
+
+###
+
+GET {{Restaurant.API_HostAddress}}/Restaurants/4
+Accept: application/json
+
+###
+
+PATCH {{Restaurant.API_HostAddress}}/Restaurants/4
+Content-Type: application/json
+
+{
+  "name": "Abo Younis",
+  "description": "Agmad mt3m fkosom el3alam",
+  "hasDelivery": true
+}
+
+###
+
+DELETE {{Restaurant.API_HostAddress}}/Restaurants
+Accept: application/json
+
+###
+
+@DishesSharedUrl = {{Restaurant.API_HostAddress}}/Restaurants/
+
+GET {{DishesSharedUrl}}/1/Dishes/7
+Accept: application/json
+
+###
+
+GET {{DishesSharedUrl}}/1/Dishes/1
+Accept: application/json
+
+###
+
+
+
+POST {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes
+Content-Type: application/json
+
+{
+  "name": "Meat Lovers Pizza",
+  "description": "Tomato, mozzarella, fresh basil, meat, sausage and olive",
+  "price": 19.99,
+  "kiloCalories": 1150,
+  "restaurantId": 1
+}
+
+###
+
+PUT {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes/7
+Content-Type: application/json
+
+{
+  "name": "Chicken Lovers Pizza",
+  "description": "Tomato, mozzarella, fresh basil, fried chicken and olive",
+  "price": 12.99,
+  "kiloCalories": 950,
+  "restaurantId": 1
+}
+
+###
+
+DELETE {{Restaurant.API_HostAddress}}/Restaurants/1/Dishes/7
+Content-Type: application/json
 
 ###
