@@ -13,7 +13,7 @@ internal sealed class DeleteRestaurantDishCommandHandler(IUnitOfWork unitOfWork,
     
     public async Task Handle(DeleteRestaurantDishCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Deleting a Dish.");
+        logger.LogInformation("Deleting a Dish with Id: {@id}.", request.Id);
         
         var getDishByIdSpecification = new GetDishByIdSpecification(request.RestaurantId);
         

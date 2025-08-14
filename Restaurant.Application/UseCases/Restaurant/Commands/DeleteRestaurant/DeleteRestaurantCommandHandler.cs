@@ -13,7 +13,7 @@ internal sealed class DeleteRestaurantCommandHandler(IUnitOfWork unitOfWork,
     public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
     {
         
-        logger.LogInformation("Getting Restaurant from the Database.");
+        logger.LogInformation("Getting Restaurant with Id: {@id}.", request.Id);
         
         var entity = await _restaurantRepository.GetAsync(request.Id);
 

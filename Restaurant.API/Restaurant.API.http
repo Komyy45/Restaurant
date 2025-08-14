@@ -21,7 +21,7 @@ Accept: application/json
 
 ###
 
-GET {{Restaurant.API_HostAddress}}/Restaurants/4
+GET {{Restaurant.API_HostAddress}}/Restaurants/2
 Accept: application/json
 
 ###

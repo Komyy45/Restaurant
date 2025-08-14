@@ -33,7 +33,7 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
     public async Task<ActionResult<int>> Create(CreateRestaurantCommand createRestaurantCommand)
     {
         var id = await mediator.Send(createRestaurantCommand);
-        return Ok(id);
+        return CreatedAtAction(nameof(Get), new { id }, null);
     }
 
     [HttpPatch("{id:int}")]

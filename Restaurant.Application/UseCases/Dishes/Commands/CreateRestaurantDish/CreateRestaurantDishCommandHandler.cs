@@ -7,18 +7,20 @@ using Restaurant.Domain.Entities;
 namespace Restaurant.Application.UseCases.Dishes.Commands.CreateRestaurantDish;
 
 internal sealed class CreateRestaurantDishCommandHandler(IUnitOfWork unitOfWork,
-    ILogger<CreateRestaurantDishCommandHandler> logger) : IRequestHandler<CreateRestaurantDishCommand>
+    ILogger<CreateRestaurantDishCommandHandler> logger) : IRequestHandler<CreateRestaurantDishCommand, int>
 {
     private readonly IGenericRepository<Dish, int> _dishRepository = unitOfWork.GetRepository<Dish, int>();
     
-    public async Task Handle(CreateRestaurantDishCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateRestaurantDishCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating new Dish.");
+        logger.LogInformation("Creating new Dish {@dish}.", request);
 
         var dish = request.ToEntity();
         
         await _dishRepository.CreateAsync(dish);
 
         await unitOfWork.CompleteAsync();
+
+        return dish.Id;
     }
 }
