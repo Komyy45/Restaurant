@@ -5,18 +5,14 @@ using Restaurant.Domain.Contracts;
 
 namespace Restaurant.Application.Features.Restaurant.Commands.CreateRestaurant;
 
-internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork,
-    ILogger<CreateRestaurantCommandHandler> logger) : IRequestHandler<CreateRestaurantCommand, int>
+internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateRestaurantCommand, int>
 {
     private IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository = unitOfWork.GetRepository<Domain.Entities.Restaurant, int>();
     
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating a new Restaurant {@restaurant}.", request);
         var restaurant = request.ToEntity();
 
-        logger.LogInformation("Creating new Restaurant.");
-        
         await _restaurantRepository.CreateAsync(restaurant);
         
         await unitOfWork.CompleteAsync();

@@ -7,16 +7,13 @@ using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Application.Features.Restaurant.Commands.UpdateRestaurant;
 
-internal sealed class UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork,
-    ILogger<DeleteRestaurantCommand> logger) : IRequestHandler<UpdateRestaurantCommand>
+internal sealed class UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateRestaurantCommand>
 {
     private readonly IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository =
         unitOfWork.GetRepository<Domain.Entities.Restaurant, int>();
     
     public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Updating Restaurant {@updatedRestaurant}.", request);
-        
         var entity = await _restaurantRepository.GetAsync(request.Id);
 
         if (entity is null)

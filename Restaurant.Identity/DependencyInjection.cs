@@ -18,7 +18,10 @@ public static class DependencyInjection
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<IdentityDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
-
+        
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityDbContext>();
+        
         services.AddScoped<IIdentityDbContextInitializer, IdentityDbContextInitializer>();
         
         services.Configure<JwtSettings>(jwtSettings =>
@@ -33,6 +36,7 @@ public static class DependencyInjection
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(bearerOptions =>
         {
             bearerOptions.TokenValidationParameters = new TokenValidationParameters()
@@ -48,8 +52,9 @@ public static class DependencyInjection
             };
         });
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<IdentityDbContext>();
+       
+
+        services.AddScoped<IUserService, UserService>();
         
         return services;
     }

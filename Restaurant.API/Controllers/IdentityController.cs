@@ -27,8 +27,8 @@ public sealed class IdentityController(IMediator mediator) : BaseApiController
         return await mediator.Send(request);
     }
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet("info")]
+    [Authorize]
     public async Task<ActionResult<AccountResponse>> GetCurrentUserProfile()
     {
         string id = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
@@ -36,8 +36,8 @@ public sealed class IdentityController(IMediator mediator) : BaseApiController
         return await mediator.Send(request);
     }
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPatch("info")]
+    [Authorize]
     public async Task<IActionResult> UpdateAccount([FromBody] UpdateAccountCommand request)
     {
         await mediator.Send(request);

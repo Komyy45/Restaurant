@@ -10,15 +10,12 @@ namespace Restaurant.Application.Features.Dishes.Queries.GetRestaurantDishes;
 using RestaurantEntity = Domain.Entities.Restaurant;
 
 
-internal sealed class GetRestaurantDishesQueryHandler(IUnitOfWork unitOfWork,
-    ILogger<GetRestaurantDishesQueryHandler> logger) : IRequestHandler<GetRestaurantDishesQuery, IEnumerable<DishResponse>>
+internal sealed class GetRestaurantDishesQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetRestaurantDishesQuery, IEnumerable<DishResponse>>
 {
     private readonly IGenericRepository<RestaurantEntity, int> _restaurantRepository = unitOfWork.GetRepository<RestaurantEntity, int>();
     
     public async Task<IEnumerable<DishResponse>> Handle(GetRestaurantDishesQuery request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Getting Dishes for Restaurant with Id: {@restaurantId}", request.RestaurantId);
-        
         var getRestaurantDishesSpecification = new GetRestaurantDishesSpecification();
         
         var restaurant = await _restaurantRepository.GetAsync(request.RestaurantId, 

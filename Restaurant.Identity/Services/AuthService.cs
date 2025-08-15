@@ -50,13 +50,14 @@ internal sealed class AuthService(
         var claims = await GetUserClaims(user);
 
         var refreshToken = GenerateRefreshToken();
-
-        identityDbContext.RefreshTokens.Add(new RefreshToken()
+                
+        identityDbContext.RefreshTokens.Update(new RefreshToken()
         {
             UserId = user.Id,
             Token = refreshToken,
             ExpiresAt = DateTime.UtcNow.AddDays(7)
         });
+        
         await identityDbContext.SaveChangesAsync();
         
         return new AuthResponse(
@@ -170,11 +171,11 @@ internal sealed class AuthService(
     {
         var userClaims = await userManager.GetClaimsAsync(user);
         var userRoles = await userManager.GetRolesAsync(user);
-
+        
         userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id)); 
         userClaims.Add(new Claim(ClaimTypes.Email, user.Email!)); 
         userClaims.Add(new Claim(ClaimTypes.Name, user.UserName!));
-
+        
         foreach (var role in userRoles)
             userClaims.Add(new Claim(ClaimTypes.Role, role));
 
