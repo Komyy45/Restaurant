@@ -120,7 +120,8 @@ namespace Restaurant.Persistence.Data.Migrations
                                 .HasForeignKey("RestaurantId");
                         });
 
-                    b.Navigation("Address");
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Restaurant.Domain.Entities.Restaurant", b =>

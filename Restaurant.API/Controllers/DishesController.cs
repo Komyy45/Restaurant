@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.API.Controllers.Common;
-using Restaurant.Application.UseCases.Dishes.Commands.CreateRestaurantDish;
-using Restaurant.Application.UseCases.Dishes.Commands.DeleteRestaurantDish;
-using Restaurant.Application.UseCases.Dishes.Commands.UpdateRestaurantDish;
-using Restaurant.Application.UseCases.Dishes.Dtos;
-using Restaurant.Application.UseCases.Dishes.Queries.GetDishById;
-using Restaurant.Application.UseCases.Dishes.Queries.GetRestaurantDishes;
+using Restaurant.Application.Features.Dishes.Commands.CreateRestaurantDish;
+using Restaurant.Application.Features.Dishes.Commands.DeleteRestaurantDish;
+using Restaurant.Application.Features.Dishes.Commands.UpdateRestaurantDish;
+using Restaurant.Application.Features.Dishes.Models.Responses;
+using Restaurant.Application.Features.Dishes.Queries.GetDishById;
+using Restaurant.Application.Features.Dishes.Queries.GetRestaurantDishes;
+using Restaurant.Application.Features.Restaurant.Queries.GetRestaurantById;
 
 namespace Restaurant.API.Controllers;
 
@@ -14,14 +15,16 @@ namespace Restaurant.API.Controllers;
 public class DishesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DishDto>>> GetRestaurantDishes([FromRoute] GetRestaurantDishesQuery request)
+    public async Task<ActionResult<IEnumerable<DishResponse>>> GetRestaurantDishes([FromRoute] int restaurantId)
     {
+        var request = new GetRestaurantDishesQuery(restaurantId);
         return Ok(await mediator.Send(request));
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<DishDto>> GetDishById([FromRoute] GetDishByIdQuery request)
+    public async Task<ActionResult<DishResponse>> GetDishById([FromRoute] int restaurantId, [FromRoute] int id)
     {
+        var request = new GetDishByIdQuery(restaurantId, id);
         return Ok(await mediator.Send(request));
     }
 
@@ -34,16 +37,17 @@ public class DishesController(IMediator mediator) : BaseApiController
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateDish([FromRoute] int id, [FromBody] UpdateRestaurantDishCommand request)
+    public async Task<IActionResult> UpdateDish([FromRoute] int restaurantId, [FromRoute] int id, [FromBody] UpdateRestaurantDishCommand request)
     {
-        request = request with { Id = id };
+        request = request with { RestaurantId = restaurantId, Id = id };
         await mediator.Send(request);
         return NoContent();
     }
     
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteDish([FromRoute] DeleteRestaurantDishCommand request)
+    public async Task<IActionResult> DeleteDish([FromRoute] int restaurantId, [FromRoute] int id)
     {
+        var request = new DeleteRestaurantDishCommand(id, restaurantId);
         await mediator.Send(request);
         return NoContent();
     }

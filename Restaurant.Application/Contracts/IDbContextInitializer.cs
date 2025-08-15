@@ -2,7 +2,7 @@
 
 public interface IDbContextInitializer
 {
-	public ValueTask InitializeAsync();
-	public ValueTask SeedAsync();
+	public Task InitializeAsync();
+	public Task SeedAsync();
 }
 

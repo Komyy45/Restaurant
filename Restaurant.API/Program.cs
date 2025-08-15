@@ -1,9 +1,7 @@
-using Microsoft.OpenApi.Models;
+using Restaurant.API.Extensions;
 using Restaurant.API.Middlewares;
-using Restaurant.Application;
-using Restaurant.Application.Contracts;
-using Restaurant.Infrastructure;
-using Restaurant.Persistence;
+using Restaurant.Infrastructure.Common;
+using Restaurant.Persistence.Data;
 using Serilog;
 
 namespace Restaurant.API
@@ -15,48 +13,14 @@ namespace Restaurant.API
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
-
-			#region Configure Services
-
-			builder.Services.AddControllers();
-
-			builder.Services.AddPersistenceServices(builder.Configuration)
-							.AddApplicationServices();
-			
-			builder.AddInfrastructureServices();
-
-			builder.Services.AddSingleton<GlobalExceptionHandlingMiddleware>();
-			
-			builder.Services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurant.API", Version = "v1" });
-			});
-
-			#endregion
+			builder.ConfigureServices();
 
 			var app = builder.Build();
 
-			var scope = app.Services.CreateScope();
+			await app.InitializeAsync<IIdentityDbContextInitializer>();
 
-			try
-			{
-				var dbContextInitializer = scope.ServiceProvider.GetService<IDbContextInitializer>();
-
-				if (dbContextInitializer is not null)
-				{
-					await dbContextInitializer.InitializeAsync();
-					await dbContextInitializer.SeedAsync();
-				}
-
-			}
-			catch (Exception ex)
-			{
-				var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-				logger.LogError(ex.Message);
-			}
-
-
+			await app.InitializeAsync<IRestaurantDbContextInitializer>();
+			
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
@@ -75,12 +39,13 @@ namespace Restaurant.API
 
 			app.UseHttpsRedirection();
 
+			app.UseAuthentication();
+
 			app.UseAuthorization();
-
-
+			
 			app.MapControllers();
 
-			app.Run();
+			await app.RunAsync();
 		}
 	}
 }
