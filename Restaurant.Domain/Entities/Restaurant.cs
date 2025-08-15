@@ -9,7 +9,7 @@ public sealed class Restaurant : BaseEntity<int>
 	public bool HasDelivery { get; set; }
 	public string? ContactEmail { get; set; } 
 	public string? Contactumber { get; set; }
-	public Address? Address { get; set; }
-	public ICollection<Dish> Dishes { get;set; } = new HashSet<Dish>();
+	public Address Address { get; set; } = default!;
+	public ICollection<Dish> Dishes { get; set; } = new HashSet<Dish>();
 }
 	

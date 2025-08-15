@@ -14,7 +14,7 @@ public static class DependencyInjection
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(assembly));
 
-        services.AddValidatorsFromAssembly(assembly)
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true)
             .AddFluentValidationAutoValidation();
         
         return services;
