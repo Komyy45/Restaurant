@@ -12,7 +12,7 @@ internal sealed class UnitOfWork(RestaurantDbContext context) : IUnitOfWork
 	where TEntity : BaseEntity<TKey>
 	where TKey : IEquatable<TKey>
 	{
-		return (IGenericRepository<TEntity, TKey>)repositories.GetOrAdd(typeof(IGenericRepository<TEntity, TKey>).Name, new GenericRepository<TEntity, TKey>(context));
+		return (IGenericRepository<TEntity, TKey>)repositories.GetOrAdd(typeof(TEntity).Name, new GenericRepository<TEntity, TKey>(context));
 	}
 
 

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Restaurant.API.Controllers.Common;
 using Restaurant.Application.Features.Dishes.Commands.CreateRestaurantDish;
 using Restaurant.Application.Features.Dishes.Commands.DeleteRestaurantDish;
@@ -49,7 +50,7 @@ public class DishesController(IMediator mediator) : BaseApiController
     }
     
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = RoleTypes.Owner)]
+    [Authorize(Roles = $"{RoleTypes.Owner},{RoleTypes.Admin}")]
     public async Task<IActionResult> DeleteDish([FromRoute] int restaurantId, [FromRoute] int id)
     {
         var request = new DeleteRestaurantDishCommand(id, restaurantId);

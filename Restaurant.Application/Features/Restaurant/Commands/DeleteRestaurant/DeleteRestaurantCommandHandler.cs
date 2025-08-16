@@ -1,23 +1,30 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurant.Application.Common.Enums;
+using Restaurant.Application.Contracts;
 using Restaurant.Domain.Contracts;
 using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Application.Features.Restaurant.Commands.DeleteRestaurant;
 
-internal sealed class DeleteRestaurantCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteRestaurantCommand>
+internal sealed class DeleteRestaurantCommandHandler(IUnitOfWork unitOfWork,
+    IRestaurantAuthorizationService restaurantAuthorizationService) : IRequestHandler<DeleteRestaurantCommand>
 {
     private readonly IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository =
         unitOfWork.GetRepository<Domain.Entities.Restaurant, int>();
     
     public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _restaurantRepository.GetAsync(request.Id);
+        var restaurant = await _restaurantRepository.GetAsync(request.Id);
 
-        if (entity is null)
+        if (restaurant is null)
             throw new NotFoundException(request.Id, nameof(Restaurant));
+
+        var isAuthorized = restaurantAuthorizationService.IsAuthorized(restaurant, ResourceOperation.Delete);
+
+        if (!isAuthorized) throw new OperationForbiddenException();
         
-        _restaurantRepository.Delete(entity);
+        _restaurantRepository.Delete(restaurant);
 
         await unitOfWork.CompleteAsync();
     }

@@ -50,13 +50,26 @@ internal sealed class AuthService(
         var claims = await GetUserClaims(user);
 
         var refreshToken = GenerateRefreshToken();
-                
-        identityDbContext.RefreshTokens.Update(new RefreshToken()
+
+        var token = await identityDbContext.RefreshTokens
+            .FirstOrDefaultAsync(token => token.UserId == user.Id);
+        
+
+        if (token is null)
         {
-            UserId = user.Id,
-            Token = refreshToken,
-            ExpiresAt = DateTime.UtcNow.AddDays(7)
-        });
+            identityDbContext.RefreshTokens.Add(new RefreshToken
+            {
+                UserId = user.Id,
+                Token = refreshToken,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            });
+        }
+        else
+        {
+            token.Token = refreshToken;
+            token.ExpiresAt = DateTime.UtcNow.AddDays(7);
+        }
+        
         
         await identityDbContext.SaveChangesAsync();
         

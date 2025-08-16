@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Domain.Common;
 using Restaurant.Infrastructure.Common;
+using Restaurant.Infrastructure.Entities;
 
 namespace Restaurant.Infrastructure.Data;
 
-public class IdentityDbContextInitializer(IdentityDbContext dbContext) : IIdentityDbContextInitializer
+public class IdentityDbContextInitializer(IdentityDbContext dbContext, 
+    UserManager<ApplicationUser> userManager) : IIdentityDbContextInitializer
 {
     private IEnumerable<IdentityRole> GetRoles()
     {
@@ -30,13 +32,29 @@ public class IdentityDbContextInitializer(IdentityDbContext dbContext) : IIdenti
     {
         bool saveChanges = false;
 
-        if (!dbContext.Roles.Any())
+        if (!await dbContext.Roles.AnyAsync())
         {
             var applicationRoles = GetRoles();
 
             await dbContext.Roles.AddRangeAsync(applicationRoles);
 
             saveChanges = true;
+        }
+
+        if (!await dbContext.Users.AnyAsync())
+        {
+            var user = new ApplicationUser()
+            {
+                Id = "00000000-0000-0000-0000-000000000001",
+                UserName = "Admin",
+                Email = "Admin@Restaurant.com",
+                FullName = "Admin",
+                DateOfBirth = new DateOnly(2004, 9, 10),
+            };
+
+            await userManager.CreateAsync(user, "P@ssw0rd");
+            await userManager.AddToRoleAsync(user, RoleTypes.Admin);
+            await userManager.AddToRoleAsync(user, RoleTypes.Owner);
         }
 
         if(saveChanges)

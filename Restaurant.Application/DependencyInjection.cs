@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurant.Application.Common.Behaviors;
+using Restaurant.Application.Mapping;
 
 namespace Restaurant.Application;
 
@@ -12,6 +13,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
+        
+        MapsterConfig.RegisterMappings();
         
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(assembly));

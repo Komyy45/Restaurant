@@ -33,9 +33,9 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
     }
     
     [HttpPost]
+    [Authorize(Roles = RoleTypes.Owner)]
     public async Task<ActionResult<int>> Create([FromBody] CreateRestaurantCommand createRestaurantCommand)
     {
-        
         var id = await mediator.Send(createRestaurantCommand);
         return CreatedAtAction(nameof(Get), new { id }, null);
     }
@@ -50,11 +50,11 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
     }
     
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = RoleTypes.Owner)]
+    [Authorize(Roles = $"{RoleTypes.Owner},{RoleTypes.Admin}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var request = new DeleteRestaurantCommand(id);
         await mediator.Send(request);
-        return Ok();
+        return NoContent();
     }
 }
