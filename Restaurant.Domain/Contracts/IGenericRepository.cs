@@ -15,6 +15,7 @@ public interface IGenericRepository<TEntity, TKey>
 	Task<TSelector?> GetAsync<TSelector>(TKey key, Expression<Func<TEntity, TSelector>> selector);	
 	Task<TEntity?> GetAsync(TKey key, ISpecification<TEntity, TKey> spec);
 	Task<TSelector?> GetAsync<TSelector>(TKey key, Expression<Func<TEntity, TSelector>> selector, ISpecification<TEntity, TKey> spec);
+	Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null);
 	ValueTask CreateAsync(TEntity entity);
 	void Update(TEntity entity);
 	void Delete(TEntity entity);

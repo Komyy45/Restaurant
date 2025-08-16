@@ -59,6 +59,11 @@ internal sealed class GenericRepository<TEntity, TKey>(RestaurantDbContext conte
 		return await dbSet.Evaluate(spec).Where(e => e.Id.Equals(key)).Select(selector).FirstOrDefaultAsync();
 	}
 
+	public async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
+	{
+		return predicate is null ? await dbSet.CountAsync() : await dbSet.CountAsync(predicate);
+	}
+
 	public async ValueTask CreateAsync(TEntity entity)
 	{
 		await dbSet.AddAsync(entity);
