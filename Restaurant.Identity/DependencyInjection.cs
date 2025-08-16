@@ -1,14 +1,17 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Restaurant.Application.Contracts;
+using Restaurant.Domain.Common;
 using Restaurant.Infrastructure.Common;
 using Restaurant.Infrastructure.Data;
 using Restaurant.Infrastructure.Entities;
+using Restaurant.Infrastructure.Policies.RestaurantOwnership;
 using Restaurant.Infrastructure.Services;
 
 namespace Restaurant.Infrastructure;
@@ -17,9 +20,18 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Start Identity DbContext Configurations //
+        
         services.AddDbContext<IdentityDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
-
+        
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityDbContext>();
+        
         services.AddScoped<IIdentityDbContextInitializer, IdentityDbContextInitializer>();
+        
+        // End Identity DbContext Configurations //
+        
+        // Start Jwt Package Configuration //
         
         services.Configure<JwtSettings>(jwtSettings =>
         {
@@ -33,6 +45,7 @@ public static class DependencyInjection
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(bearerOptions =>
         {
             bearerOptions.TokenValidationParameters = new TokenValidationParameters()
@@ -48,8 +61,32 @@ public static class DependencyInjection
             };
         });
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<IdentityDbContext>();
+        services.AddAuthorization(c =>
+        {
+            c.AddPolicy(PolicyTypes.RestaurantOwnership, builder =>
+            {
+                builder.RequireAuthenticatedUser();
+                builder.AddRequirements(new RestaurantOwnershipRequirement(2));
+            });
+        });
+        
+        // End Jwt Package Configuration //
+
+        // Start Identity Services //
+        
+        services.AddScoped<IUserService, UserService>();
+
+        services.AddScoped<IRoleService, RoleService>();
+
+        services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
+        
+        // End Identity Services // 
+        
+        // Start Custom Policies Handlers //
+        
+        services.AddScoped<IAuthorizationHandler, RestaurantOwnershipRequirementHandler>();
+        
+        // End Custom Policies Handlers //
         
         return services;
     }

@@ -14,6 +14,16 @@ internal static class RestaurantsMappingProfile
     internal static RestaurantEntity ToEntity(this RestaurantResponse restaurantResponse) => restaurantResponse.Adapt<RestaurantEntity>();
     internal static RestaurantEntity ToEntity(this UpdateRestaurantCommand updateRestaurantCommand) => updateRestaurantCommand.Adapt<RestaurantEntity>();
     internal static RestaurantEntity ToEntity(this UpdateRestaurantCommand updateRestaurantCommand, RestaurantEntity entity) => updateRestaurantCommand.Adapt(entity);
-    internal static RestaurantEntity ToEntity(this CreateRestaurantCommand createRestaurantCommand) => createRestaurantCommand.Adapt<RestaurantEntity>();
+
+    internal static RestaurantEntity ToEntity(this CreateRestaurantCommand createRestaurantCommand)
+    {
+         var entity = createRestaurantCommand.Adapt<RestaurantEntity>();
+         entity.Address = new();
+         entity.Address.City = createRestaurantCommand.City;
+         entity.Address.Street = createRestaurantCommand.Street;
+         entity.Address.PostalCode = createRestaurantCommand.PostalCode;
+         entity.Contactumber = createRestaurantCommand.ContactNumber;
+         return entity;
+    }
     internal static RestaurantEntity ToEntity(this CreateRestaurantCommand createRestaurantCommand, RestaurantEntity entity) => createRestaurantCommand.Adapt(entity);
 }

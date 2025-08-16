@@ -1,21 +1,28 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurant.Application.Common.Enums;
+using Restaurant.Application.Contracts;
 using Restaurant.Application.Mapping;
 using Restaurant.Domain.Contracts;
+using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Application.Features.Restaurant.Commands.CreateRestaurant;
 
-internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork,
-    ILogger<CreateRestaurantCommandHandler> logger) : IRequestHandler<CreateRestaurantCommand, int>
+internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork, 
+    IRestaurantAuthorizationService restaurantAuthorizationService,
+    IUserService userService) : IRequestHandler<CreateRestaurantCommand, int>
 {
     private IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository = unitOfWork.GetRepository<Domain.Entities.Restaurant, int>();
     
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating a new Restaurant {@restaurant}.", request);
         var restaurant = request.ToEntity();
 
-        logger.LogInformation("Creating new Restaurant.");
+        var isAuthorized = restaurantAuthorizationService.IsAuthorized(restaurant, ResourceOperation.Create);
+
+        if (!isAuthorized) throw new OperationForbiddenException();
+
+        restaurant.OwnerId = userService.GetCurrentUser().Id;
         
         await _restaurantRepository.CreateAsync(restaurant);
         

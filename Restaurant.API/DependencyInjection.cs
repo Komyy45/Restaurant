@@ -28,7 +28,7 @@ public static class DependencyInjection
             {
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
-                Scheme = "bearer",
+                Scheme = "Bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
                 Description = "Enter your JWT token in this format: Bearer {token}"
@@ -49,5 +49,7 @@ public static class DependencyInjection
                 }
             });
         });
+
+        builder.Services.AddHttpContextAccessor();
     }
 }

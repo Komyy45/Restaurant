@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurant.Application.Common.Enums;
+using Restaurant.Application.Contracts;
 using Restaurant.Application.Features.Restaurant.Commands.DeleteRestaurant;
 using Restaurant.Application.Mapping;
 using Restaurant.Domain.Contracts;
@@ -7,24 +9,26 @@ using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Application.Features.Restaurant.Commands.UpdateRestaurant;
 
-internal sealed class UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork,
-    ILogger<DeleteRestaurantCommand> logger) : IRequestHandler<UpdateRestaurantCommand>
+internal sealed class UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork,  
+    IRestaurantAuthorizationService restaurantAuthorizationService) : IRequestHandler<UpdateRestaurantCommand>
 {
     private readonly IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository =
         unitOfWork.GetRepository<Domain.Entities.Restaurant, int>();
     
     public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Updating Restaurant {@updatedRestaurant}.", request);
-        
-        var entity = await _restaurantRepository.GetAsync(request.Id);
+        var restaurant = await _restaurantRepository.GetAsync(request.Id);
 
-        if (entity is null)
+        if (restaurant is null)
             throw new NotFoundException(request.Id, nameof(Restaurant));
+        
+        var isAuthorized = restaurantAuthorizationService.IsAuthorized(restaurant, ResourceOperation.Update);
 
-        entity = request.ToEntity(entity);
+        if (!isAuthorized) throw new OperationForbiddenException();
 
-        _restaurantRepository.Update(entity);
+        restaurant = request.ToEntity(restaurant);
+
+        _restaurantRepository.Update(restaurant);
 
         await unitOfWork.CompleteAsync();
     }

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Restaurant.Infrastructure.Entities;
 
 namespace Restaurant.Infrastructure.Data;
@@ -12,6 +13,7 @@ public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> option
         base.OnModelCreating(builder);
 
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        builder.Entity<ApplicationUser>().Property(e => e.Id).ValueGeneratedNever();
     }
 
     public DbSet<RefreshToken> RefreshTokens { get; set; }
