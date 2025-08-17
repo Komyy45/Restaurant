@@ -8,13 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Restaurant.Application.Contracts;
 using Restaurant.Domain.Common;
-using Restaurant.Infrastructure.Common;
-using Restaurant.Infrastructure.Data;
-using Restaurant.Infrastructure.Entities;
-using Restaurant.Infrastructure.Policies.RestaurantOwnership;
-using Restaurant.Infrastructure.Services;
+using Restaurant.Identity.Common;
+using Restaurant.Identity.Data;
+using Restaurant.Identity.Entities;
+using Restaurant.Identity.Policies.RestaurantOwnership;
+using Restaurant.Identity.Services;
 
-namespace Restaurant.Infrastructure;
+namespace Restaurant.Identity;
 
 public static class DependencyInjection
 {

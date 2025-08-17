@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Restaurant.Infrastructure.Data.Migrations
+namespace Restaurant.Identity.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

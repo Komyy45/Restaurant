@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Restaurant.Infrastructure.Data;
-
+using Restaurant.Identity.Data;
+using Restaurant.Identity.Data;
+  
 #nullable disable
 
-namespace Restaurant.Infrastructure.Data.Migrations
+namespace Restaurant.Identity.Data.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
     [Migration("20250815081729_InitialCreate")]

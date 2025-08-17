@@ -1,6 +1,6 @@
 ﻿using Restaurant.Application.Contracts;
 
-namespace Restaurant.Infrastructure.Common;
+namespace Restaurant.Identity.Common;
 
 public interface IIdentityDbContextInitializer : IDbContextInitializer
 { }

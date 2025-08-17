@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Domain.Common;
-using Restaurant.Infrastructure.Common;
-using Restaurant.Infrastructure.Entities;
+using Restaurant.Identity.Common;
+using Restaurant.Identity.Entities;
 
-namespace Restaurant.Infrastructure.Data;
+namespace Restaurant.Identity.Data;
 
 public class IdentityDbContextInitializer(IdentityDbContext dbContext, 
     UserManager<ApplicationUser> userManager) : IIdentityDbContextInitializer

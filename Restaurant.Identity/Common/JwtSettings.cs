@@ -1,4 +1,4 @@
-﻿namespace Restaurant.Infrastructure.Common;
+﻿namespace Restaurant.Identity.Common;
 
 internal sealed class JwtSettings
 {

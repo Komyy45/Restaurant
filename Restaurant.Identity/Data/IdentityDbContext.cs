@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Restaurant.Infrastructure.Entities;
+using Restaurant.Identity.Entities;
 
-namespace Restaurant.Infrastructure.Data;
+namespace Restaurant.Identity.Data;
 
 public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {

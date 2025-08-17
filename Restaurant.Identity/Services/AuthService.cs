@@ -15,13 +15,13 @@ using Restaurant.Application.Features.Authentication.Commands.RevokeToken;
 using Restaurant.Application.Features.Authentication.Commands.UpdateAccount;
 using Restaurant.Application.Features.Authentication.Models.Responses;
 using Restaurant.Domain.Exceptions;
-using Restaurant.Infrastructure.Common;
-using Restaurant.Infrastructure.Data;
-using Restaurant.Infrastructure.Entities;
-using Restaurant.Infrastructure.Mapping;
+using Restaurant.Identity.Common;
+using Restaurant.Identity.Data;
+using Restaurant.Identity.Entities;
+using Restaurant.Identity.Mapping;
 using ValidationException = Restaurant.Domain.Exceptions.ValidationException;
 
-namespace Restaurant.Infrastructure.Services;
+namespace Restaurant.Identity.Services;
 
 internal sealed class AuthService(
     SignInManager<ApplicationUser> signInManager, 

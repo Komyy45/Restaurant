@@ -2,9 +2,9 @@
 using Restaurant.Application.Features.Authentication.Commands.UpdateAccount;
 using Restaurant.Application.Features.Authentication.Models.Responses;
 using Restaurant.Domain.Entities;
-using Restaurant.Infrastructure.Entities;
+using Restaurant.Identity.Entities;
 
-namespace Restaurant.Infrastructure.Mapping;
+namespace Restaurant.Identity.Mapping;
 
 public static class IdentityMappingProfile
 {

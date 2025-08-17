@@ -2,7 +2,7 @@
 
 namespace Restaurant.Domain.Specifications.Restaurants;
 using RestaurantEntity = Entities.Restaurant;
-public class GetAllRestaurantsSpecifications : BaseSpecifications<RestaurantEntity, int>
+public class GetAllRestaurantsSpecification : BaseSpecification<RestaurantEntity, int>
 {
     private readonly Dictionary<string, Expression<Func<RestaurantEntity, object>>> _columnSelector =
         new()
@@ -12,7 +12,7 @@ public class GetAllRestaurantsSpecifications : BaseSpecifications<RestaurantEnti
             {nameof(RestaurantEntity.Category), r => r.Category}
         };
     
-    public GetAllRestaurantsSpecifications(string? searchText, int pageSize, int pageNumber, string? sortBy, bool sortDirection) : base(r =>
+    public GetAllRestaurantsSpecification(string? searchText, int pageSize, int pageNumber, string? sortBy, bool sortDirection) : base(r =>
         string.IsNullOrWhiteSpace(searchText) || 
         r.Name.Contains(searchText) ||
         r.Description.Contains(searchText))

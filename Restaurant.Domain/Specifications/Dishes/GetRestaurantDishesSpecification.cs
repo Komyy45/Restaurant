@@ -3,7 +3,7 @@ using Restaurant.Domain.Entities;
 
 namespace Restaurant.Domain.Specifications.Dishes;
 
-public class GetRestaurantDishesSpecification : BaseSpecifications<Dish, int>
+public class GetRestaurantDishesSpecification : BaseSpecification<Dish, int>
 {
     private readonly Dictionary<string, Expression<Func<Dish, object>>> _columnSelector =
         new()

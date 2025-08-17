@@ -7,6 +7,7 @@ using Restaurant.Domain.Exceptions;
 
 namespace Restaurant.Application.Features.Restaurant.Queries.GetRestaurantById;
 
+
 internal sealed class GetRestaurantByIdQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetRestaurantByIdQuery, RestaurantResponse>
 {
     private readonly IGenericRepository<Domain.Entities.Restaurant, int> _restaurantRepository =
