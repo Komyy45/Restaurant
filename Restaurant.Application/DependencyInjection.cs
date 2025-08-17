@@ -15,8 +15,6 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
         
-        MapsterConfig.RegisterMappings();
-        
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(assembly));
 
