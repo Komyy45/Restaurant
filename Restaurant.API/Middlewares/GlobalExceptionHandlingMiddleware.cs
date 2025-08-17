@@ -29,9 +29,9 @@ internal sealed class GlobalExceptionHandlingMiddleware(ILogger<GlobalExceptionH
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
                     message = new { statusCode = StatusCodes.Status403Forbidden, message = e.Message };
                     break;
-                case ValidationException:
+                case ValidationException validationException:
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                    message = new { statusCode = StatusCodes.Status400BadRequest, message = e.Message };
+                    message = new { statusCode = StatusCodes.Status400BadRequest, message = e.Message, errors =  validationException.Errors };
                     break;
                 default:
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;

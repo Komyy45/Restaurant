@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.Domain.Contracts;
 using Restaurant.Domain.Entities.Common;
 
@@ -15,6 +17,12 @@ internal static class SpecificationEvaluator
 
         if (spec.Includes is not null)
             query = spec.Includes.Aggregate(query, (acc, include) => acc.Include(include));
+        
+        if(spec.IsPaginationEnabled)
+            query = query.Skip(spec.Skip).Take(spec.Take);
+
+        if (spec.OrderBy is not null)
+            query = spec.SortDirection ? query.OrderBy(spec.OrderBy) : query.OrderByDescending(spec.OrderBy);
         
         return query;
     }

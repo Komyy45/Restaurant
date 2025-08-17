@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.API.Controllers.Common;
+using Restaurant.API.Models;
+using Restaurant.Application.Common;
+using Restaurant.Application.Common.Messaging;
 using Restaurant.Application.Contracts;
 using Restaurant.Application.Features.Restaurant.Commands.CreateRestaurant;
 using Restaurant.Application.Features.Restaurant.Commands.DeleteRestaurant;
@@ -17,9 +20,15 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
 {
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RestaurantResponse>>> GetAll()
+    public async Task<ActionResult<Pagination<RestaurantResponse>>> GetAll([FromQuery] PaginationRequest paginationRequest)
     {
-        var request = new GetAllRestaurantsQuery();
+        var request = new GetAllRestaurantsQuery(
+            SearchText: paginationRequest.SearchText,
+            PageSize: paginationRequest.PageSize,
+            PageNumber: paginationRequest.PageNumber,
+            SortBy: paginationRequest.SortBy,
+            SortDirection: paginationRequest.SortDirection
+        );
         var response = await mediator.Send(request);
         return Ok(response);
     }
@@ -34,9 +43,9 @@ public class RestaurantsController(IMediator mediator) : BaseApiController
     
     [HttpPost]
     [Authorize(Roles = RoleTypes.Owner)]
-    public async Task<ActionResult<int>> Create([FromBody] CreateRestaurantCommand createRestaurantCommand)
+    public async Task<ActionResult<int>> Create([FromBody] CreateRestaurantCommand request)
     {
-        var id = await mediator.Send(createRestaurantCommand);
+        var id = await mediator.Send(request);
         return CreatedAtAction(nameof(Get), new { id }, null);
     }
 
