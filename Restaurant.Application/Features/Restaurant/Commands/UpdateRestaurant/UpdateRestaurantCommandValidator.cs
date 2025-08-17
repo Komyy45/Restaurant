@@ -10,5 +10,8 @@ internal sealed class UpdateRestaurantCommandValidator : AbstractValidator<Updat
     {
         RuleFor(r => r.Name)
             .Length(3, 100);
+        
+        RuleFor(r => r.Description)
+            .MaximumLength(300);
     }
 }

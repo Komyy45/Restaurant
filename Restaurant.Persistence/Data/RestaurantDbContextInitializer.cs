@@ -17,7 +17,7 @@ public sealed class RestaurantDbContextInitializer(RestaurantDbContext dbContext
 			Category = "Italian",
 			HasDelivery = true,
 			ContactEmail = "info@bellaitalia.com",
-			Contactumber = "+1-202-555-0111",
+			ContactNumber = "+1-202-555-0111",
 			Address = new Address
 			{
 				Street = "123 Pasta St",
@@ -38,7 +38,7 @@ public sealed class RestaurantDbContextInitializer(RestaurantDbContext dbContext
 			Category = "Japanese",
 			HasDelivery = false,
 			ContactEmail = "contact@sushiworld.com",
-			Contactumber = "+1-202-555-0222",
+			ContactNumber = "+1-202-555-0222",
 			Address = new Address
 			{
 				Street = "456 Ocean Ave",
@@ -59,7 +59,7 @@ public sealed class RestaurantDbContextInitializer(RestaurantDbContext dbContext
 			Category = "Indian",
 			HasDelivery = true,
 			ContactEmail = "hello@spicegarden.com",
-			Contactumber = "+1-202-555-0333",
+			ContactNumber = "+1-202-555-0333",
 			Address = new Address
 			{
 				Street = "789 Curry Rd",

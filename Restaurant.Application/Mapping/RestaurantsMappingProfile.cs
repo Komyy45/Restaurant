@@ -18,7 +18,7 @@ internal static class RestaurantsMappingProfile
             HasDelivery: restaurant.HasDelivery,
             Category: restaurant.Category,
             ContactEmail: restaurant.ContactEmail,
-            ContactNumber: restaurant.Contactumber,
+            ContactNumber: restaurant.ContactNumber,
             City: restaurant.Address.City,
             Street: restaurant.Address.Street,
             Postalcode: restaurant.Address.PostalCode
@@ -33,7 +33,7 @@ internal static class RestaurantsMappingProfile
             Name = updateRestaurantCommand.Name,
             Description = updateRestaurantCommand.Description,
             Category = existingEntity.Category,
-            Contactumber = existingEntity.Contactumber,
+            ContactNumber = existingEntity.ContactNumber,
             ContactEmail = existingEntity.ContactEmail,
             Address = new()
             {
@@ -54,7 +54,7 @@ internal static class RestaurantsMappingProfile
              Name = createRestaurantCommand.Name,
              Description = createRestaurantCommand.Description,
              Category = createRestaurantCommand.Category,
-             Contactumber = createRestaurantCommand.ContactNumber,
+             ContactNumber = createRestaurantCommand.ContactNumber,
              ContactEmail = createRestaurantCommand.ContactEmail,
              Address = new()
              {

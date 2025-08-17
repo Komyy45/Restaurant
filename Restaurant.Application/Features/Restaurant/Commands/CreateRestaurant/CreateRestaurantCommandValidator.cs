@@ -9,7 +9,10 @@ internal sealed class CreateRestaurantCommandValidator : AbstractValidator<Creat
     public CreateRestaurantCommandValidator()
     {
         RuleFor(r => r.Name)
-            .Length(3, 100);
+            .Length(3, 50);
+        
+        RuleFor(r => r.Description)
+        .MaximumLength(300);
             
         RuleFor(r => r.ContactEmail)
             .EmailAddress()
