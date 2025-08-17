@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Restaurant.API.Controllers.Common;
+using Restaurant.API.Models;
+using Restaurant.Application.Common;
+using Restaurant.Application.Common.Messaging;
 using Restaurant.Application.Features.Dishes.Commands.CreateRestaurantDish;
 using Restaurant.Application.Features.Dishes.Commands.DeleteRestaurantDish;
 using Restaurant.Application.Features.Dishes.Commands.UpdateRestaurantDish;
@@ -18,9 +21,16 @@ namespace Restaurant.API.Controllers;
 public class DishesController(IMediator mediator) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DishResponse>>> GetRestaurantDishes([FromRoute] int restaurantId)
+    public async Task<ActionResult<Pagination<DishResponse>>> GetRestaurantDishes([FromRoute] int restaurantId, [FromQuery] PaginationRequest paginationRequest)
     {
-        var request = new GetRestaurantDishesQuery(restaurantId);
+        var request = new GetRestaurantDishesQuery(
+            RestaurantId: restaurantId,
+            SearchText: paginationRequest.SearchText,
+            PageNumber: paginationRequest.PageNumber,
+            PageSize: paginationRequest.PageSize,
+            SortBy: paginationRequest.SortBy,
+            SortDirection: paginationRequest.SortDirection
+            );
         return Ok(await mediator.Send(request));
     }
 

@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Restaurant.Application.Common;
 using Restaurant.Application.Common.Behaviors;
 using Restaurant.Application.Mapping;
 
@@ -14,15 +15,15 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
         
-        MapsterConfig.RegisterMappings();
-        
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(assembly));
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true)
             .AddFluentValidationAutoValidation();
 
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        
         
         return services;
     }

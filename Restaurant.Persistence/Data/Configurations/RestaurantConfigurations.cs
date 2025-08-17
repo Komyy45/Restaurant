@@ -8,6 +8,14 @@ internal sealed class RestaurantConfigurations : BaseEntityConfigurations<Domain
 	{
 		base.Configure(builder);
 
+		builder.Property(r => r.Name)
+			.HasMaxLength(50)
+			.IsRequired();
+
+		builder.Property(r => r.Description)
+			.HasMaxLength(300)
+			.IsRequired();
+		
 		builder.OwnsOne(e => e.Address);
 
 		builder.HasMany(e => e.Dishes)

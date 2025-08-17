@@ -45,15 +45,15 @@ public sealed class IdentityController(IMediator mediator) : BaseApiController
     }
 
     [HttpPost("refresh-token")]
-    public async Task<ActionResult<RefreshTokenResponse>> RefreshToken([FromQuery] RefreshTokenCommand refreshTokenCommand)
+    public async Task<ActionResult<RefreshTokenResponse>> RefreshToken([FromQuery] RefreshTokenCommand request)
     {
-        return await mediator.Send(refreshTokenCommand);
+        return await mediator.Send(request);
     }
     
     [HttpDelete("revoke-token")]
-    public async Task<IActionResult> RevokeToken([FromQuery] RevokeTokenCommand revokeTokenCommand)
+    public async Task<IActionResult> RevokeToken([FromQuery] RevokeTokenCommand request)
     {
-        await mediator.Send(revokeTokenCommand);
+        await mediator.Send(request);
         return NoContent();
     }
 }

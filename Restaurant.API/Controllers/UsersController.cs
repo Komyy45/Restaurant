@@ -12,16 +12,16 @@ namespace Restaurant.API.Controllers;
 public sealed class UsersController(IMediator mediator) : BaseApiController
 {
     [HttpPost("assign-role")]
-    public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleToUserCommand assignRoleToUserCommand)
+    public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleToUserCommand request)
     {
-        await mediator.Send(assignRoleToUserCommand);
+        await mediator.Send(request);
         return NoContent();
     }
     
     [HttpDelete("remove-role")]
-    public async Task<IActionResult> RemoveRoleFromUser([FromBody] RemoveRoleFromUserCommand removeRoleFromUserCommand)
+    public async Task<IActionResult> RemoveRoleFromUser([FromBody] RemoveRoleFromUserCommand request)
     {
-        await mediator.Send(removeRoleFromUserCommand);
+        await mediator.Send(request);
         return NoContent();
     }
 }

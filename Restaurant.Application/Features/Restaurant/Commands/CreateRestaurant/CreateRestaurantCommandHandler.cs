@@ -16,13 +16,13 @@ internal sealed class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork,
     
     public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        var restaurant = request.ToEntity();
+        var user = userService.GetCurrentUser();
+        
+        var restaurant = request.ToEntity(user.Id);
 
         var isAuthorized = restaurantAuthorizationService.IsAuthorized(restaurant, ResourceOperation.Create);
 
         if (!isAuthorized) throw new OperationForbiddenException();
-
-        restaurant.OwnerId = userService.GetCurrentUser().Id;
         
         await _restaurantRepository.CreateAsync(restaurant);
         

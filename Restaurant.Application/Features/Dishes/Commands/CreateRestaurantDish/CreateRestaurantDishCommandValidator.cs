@@ -6,11 +6,17 @@ internal sealed class CreateRestaurantDishCommandValidator : AbstractValidator<C
 {
     public CreateRestaurantDishCommandValidator()
     {
-        RuleFor(r => r.Price)
+        RuleFor(d => d.Name)
+            .Length(3, 100);
+        
+        RuleFor(d => d.Description)
+            .MaximumLength(300);
+        
+        RuleFor(d => d.Price)
             .GreaterThan(0)
             .WithMessage("Price must be a positive value.");
         
-        RuleFor(r => r.KiloCalories)
+        RuleFor(d => d.KiloCalories)
             .GreaterThan(0)
             .WithMessage("KiloCalories must be a positive value.");
     }
