@@ -23,4 +23,8 @@
     <Folder Include="Features\Users\Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Restaurant.Application.Tests" />
+  </ItemGroup>
+  
 </Project>
