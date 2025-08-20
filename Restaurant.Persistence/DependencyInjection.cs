@@ -11,7 +11,7 @@ public static class DependencyInjection
 {
 	public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
 	{
-		services.AddDbContext<RestaurantDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+		services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 		
 		services.AddScoped<IRestaurantDbContextInitializer, RestaurantDbContextInitializer>();
 

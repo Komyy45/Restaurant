@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
   </ItemGroup>
 
 </Project>
