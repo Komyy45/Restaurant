@@ -37,7 +37,10 @@ public static class IdentityMappingProfile
     {
         var entity = new ApplicationUser()
         {
-            Email = registerCommand.Email
+            UserName = registerCommand.UserName,
+            Email = registerCommand.Email,
+            FullName = registerCommand.FullName,
+            DateOfBirth = registerCommand.DateOfBirth
         };
         return entity;
     }
