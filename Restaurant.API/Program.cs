@@ -1,6 +1,6 @@
 using Restaurant.API.Extensions;
 using Restaurant.API.Middlewares;
-using Restaurant.Infrastructure.Common;
+using Restaurant.Identity.Common;
 using Restaurant.Persistence.Data;
 using Serilog;
 

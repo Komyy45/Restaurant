@@ -1,6 +1,7 @@
 ﻿using Restaurant.Application.Features.Restaurant.Commands.CreateRestaurant;
 using Restaurant.Application.Features.Restaurant.Commands.UpdateRestaurant;
 using Restaurant.Application.Features.Restaurant.Models.Responses;
+using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Mapping;
 
@@ -19,10 +20,22 @@ internal static class RestaurantsMappingProfile
             Category: restaurant.Category,
             ContactEmail: restaurant.ContactEmail,
             ContactNumber: restaurant.ContactNumber,
-            City: restaurant.Address.City,
-            Street: restaurant.Address.Street,
-            Postalcode: restaurant.Address.PostalCode
+            City: restaurant.Address?.City,
+            Street: restaurant.Address?.Street,
+            Postalcode: restaurant.Address?.PostalCode
         );
+        
+        var restaurantAddress = restaurant.Address;
+        if (restaurantAddress is not null)
+        {
+           
+            dto = dto with
+            {
+                City = restaurantAddress.City,
+                Street = restaurantAddress.Street,
+                Postalcode = restaurantAddress.PostalCode,
+            };
+        }
         
         return dto;
     }
@@ -30,21 +43,27 @@ internal static class RestaurantsMappingProfile
     {
         var entity = new RestaurantEntity()
         {
+            Id = existingEntity.Id,
             Name = updateRestaurantCommand.Name,
             Description = updateRestaurantCommand.Description,
             Category = existingEntity.Category,
             ContactNumber = existingEntity.ContactNumber,
             ContactEmail = existingEntity.ContactEmail,
-            Address = new()
-            {
-                City = existingEntity.Address.City,
-                Street = existingEntity.Address.Street,
-                PostalCode = existingEntity.Address.PostalCode
-            },
             HasDelivery = updateRestaurantCommand.HasDelivery,
             OwnerId = existingEntity.OwnerId
         };
-
+        
+        var existingEntityAddress = existingEntity.Address;
+        if (existingEntityAddress is not null)
+        {
+            entity.Address = new()
+            {
+                City = existingEntityAddress.City,
+                Street = existingEntityAddress.Street,
+                PostalCode = existingEntityAddress.PostalCode,
+            };
+        }
+        
         return entity;
     }
     internal static RestaurantEntity ToEntity(this CreateRestaurantCommand createRestaurantCommand, string ownerId)

@@ -3,7 +3,7 @@ using Restaurant.Application.Common.Enums;
 using Restaurant.Application.Contracts;
 using Restaurant.Domain.Common;
 
-namespace Restaurant.Infrastructure.Services;
+namespace Restaurant.Identity.Services;
 using RestaurantEntity = Domain.Entities.Restaurant;
 
 internal sealed class RestaurantAuthorizationService(

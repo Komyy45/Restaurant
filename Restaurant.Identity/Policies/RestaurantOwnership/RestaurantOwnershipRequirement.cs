@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Restaurant.Infrastructure.Policies.RestaurantOwnership;
+namespace Restaurant.Identity.Policies.RestaurantOwnership;
 
 internal sealed class RestaurantOwnershipRequirement(uint minimumNumberOfOwnedRestaurants) : IAuthorizationRequirement
 {

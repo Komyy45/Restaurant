@@ -1,5 +1,5 @@
 ﻿using Restaurant.Application.Contracts;
-using Restaurant.Infrastructure.Common;
+using Restaurant.Identity.Common;
 using Restaurant.Persistence.Data;
 
 namespace Restaurant.API.Extensions;

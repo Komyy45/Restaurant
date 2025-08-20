@@ -5,7 +5,7 @@ using Restaurant.Application.Features.Authentication.Models.Responses;
 
 namespace Restaurant.Application.Features.Authentication.Queries.GetCurrentUserAccount;
 
-public class GetCurrentUserAccountQueryHandler(
+internal sealed class GetCurrentUserAccountQueryHandler(
     IAuthService authService
 ) : IRequestHandler<GetCurrentUserAccountQuery, AccountResponse>
 {

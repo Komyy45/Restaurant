@@ -3,9 +3,9 @@ using Restaurant.Application.Contracts;
 using Restaurant.Application.Features.Users.Commands.AssignRoleToUser;
 using Restaurant.Application.Features.Users.Commands.RemoveRoleFromUser;
 using Restaurant.Domain.Exceptions;
-using Restaurant.Infrastructure.Entities;
+using Restaurant.Identity.Entities;
 
-namespace Restaurant.Infrastructure.Services;
+namespace Restaurant.Identity.Services;
 
 internal sealed class RoleService(
     UserManager<ApplicationUser> userManager,

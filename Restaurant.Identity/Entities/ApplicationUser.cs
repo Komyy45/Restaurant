@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Restaurant.Infrastructure.Entities;
+namespace Restaurant.Identity.Entities;
 
 public sealed class ApplicationUser : IdentityUser
 {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Restaurant.Domain.Contracts;
 
-namespace Restaurant.Infrastructure.Policies.RestaurantOwnership;
+namespace Restaurant.Identity.Policies.RestaurantOwnership;
 using RestaurantEntity = Domain.Entities.Restaurant;
 internal sealed class RestaurantOwnershipRequirementHandler(IUnitOfWork unitOfWork,
     ILogger<RestaurantOwnershipRequirementHandler> logger) : AuthorizationHandler<RestaurantOwnershipRequirement>

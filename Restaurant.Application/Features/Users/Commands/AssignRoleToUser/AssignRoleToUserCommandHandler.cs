@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using System.Runtime.CompilerServices;
+using MediatR;
 using Restaurant.Application.Contracts;
+
 
 namespace Restaurant.Application.Features.Users.Commands.AssignRoleToUser;
 

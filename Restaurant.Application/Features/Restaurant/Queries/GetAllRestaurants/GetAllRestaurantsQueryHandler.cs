@@ -16,7 +16,7 @@ internal sealed class GetAllRestaurantsQueryHandler(IUnitOfWork unitOfWork) : IR
     
     public async Task<Pagination<RestaurantResponse>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
     {
-        var getAllRestaurantsSpecifications = new GetAllRestaurantsSpecifications(
+        var getAllRestaurantsSpecifications = new GetAllRestaurantsSpecification(
             searchText: request.SearchText,
             pageSize: request.PageSize,
             pageNumber: request.PageNumber,

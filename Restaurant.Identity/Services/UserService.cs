@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Restaurant.Application.Common.User;
 using Restaurant.Application.Contracts;
 
-namespace Restaurant.Infrastructure.Services;
+namespace Restaurant.Identity.Services;
 
 internal sealed class UserService(IHttpContextAccessor httpContextAccessor) : IUserService
 {

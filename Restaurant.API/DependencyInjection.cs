@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Restaurant.API.Middlewares;
 using Restaurant.Application;
+using Restaurant.Identity;
 using Restaurant.Infrastructure;
 using Restaurant.Persistence;
 
